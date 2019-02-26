@@ -1088,7 +1088,7 @@ public class WalletTool {
                 if (req.aesKey == null)
                     return; // Error message already printed.
             }
-            wallet.completeTx(req);i // may throw InsufficientMoneyException.
+            wallet.completeTx(req); // may throw InsufficientMoneyException.
             if (options.has("offline")) {
                 wallet.commitTx(req.tx);
                 return;
