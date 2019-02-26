@@ -101,7 +101,7 @@ public final class BtcFixedFormat extends BtcFormat {
     /**
      * Return the currency code that identifies the units in which values formatted and
      * (by-default) parsed by this instance are denominated.  For example, if the formatter's
-     * denomination is millibitcoins, then this method will return <code>"mBTC"</code>,
+     * denomination is millibitcoins, then this method will return <code>"mGALI"</code>,
      * assuming the default base currency-code is not overridden using a
      * {@link BtcFormat.Builder}.  */
     public String code() { return prefixCode(coinCode(), scale); }
@@ -109,7 +109,7 @@ public final class BtcFixedFormat extends BtcFormat {
     /**
      * Return the currency symbol that identifies the units in which values formatted by this
      * instance are denominated. For example, when invoked on an instance denominated in
-     * millibitcoins, this method by default returns <code>"₥฿"</code>, depending on the
+     * millibitcoins, this method by default returns <code>"₥G"</code>, depending on the
      * locale.  */
     public String symbol() { return prefixSymbol(coinSymbol(), scale); }
 

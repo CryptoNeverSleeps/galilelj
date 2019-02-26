@@ -78,10 +78,10 @@ import java.util.regex.Pattern;
  *
  * <blockquote><pre>
  * BtcFormat f = BtcFormat.getInstance();
- * String c = f.format(Coin.COIN);                <strong>// "BTC 1.00"</strong>
- * String k = f.format(Coin.COIN.multiply(1000)); <strong>// "BTC 1,000.00"</strong>
- * String m = f.format(Coin.COIN.divide(1000));   <strong>// "mBTC 1.00"</strong>
- * Coin all = f.parseObject("M฿ 21");             <strong>// All the money in the world</strong>
+ * String c = f.format(Coin.COIN);                <strong>// "GALI 1.00"</strong>
+ * String k = f.format(Coin.COIN.multiply(1000)); <strong>// "GALI 1,000.00"</strong>
+ * String m = f.format(Coin.COIN.divide(1000));   <strong>// "mGALI 1.00"</strong>
+ * Coin all = f.parseObject("MG 25");             <strong>// All the money in the world</strong>
  * </pre></blockquote>
  *
  * <h3>Auto-Denomination versus Fixed-Denomination</h3>
@@ -98,15 +98,15 @@ import java.util.regex.Pattern;
  * values of {@link BtcAutoFormat.Style}.  There are two styles constants: {@link
  * BtcAutoFormat.Style#CODE} (the default), and {@link BtcAutoFormat.Style#SYMBOL}.  The
  * difference is that the <code>CODE</code> style uses an internationally-distinct currency
- * code, such as <code>"BTC"</code>, to indicate the units of denomination, while the
+ * code, such as <code>"GALI"</code>, to indicate the units of denomination, while the
  * <code>SYMBOL</code> style uses a possibly-ambiguous currency symbol such as
- * <code>"฿"</code>.
+ * <code>"G"</code>.
  *
  * <p>The denomination used when formatting will be either bitcoin, millicoin
  * or microcoin, depending on the value being represented, chosen so as to minimize the number
  * of consecutive zeros displayed without losing precision.  For example, depending on the
- * locale, a value of one bitcoin might be formatted as <pre>฿1.00</pre> where a value
- * exceeding that by one satoshi would be <pre>µ฿1,000,000.01</pre>
+ * locale, a value of one bitcoin might be formatted as <pre>G1.00</pre> where a value
+ * exceeding that by one satoshi would be <pre>µG1,000,000.01</pre>
  *
  * <h5>Fixed Denomination</h5>
  * 
@@ -116,8 +116,8 @@ import java.util.regex.Pattern;
  * increasing precision to convert the representation of a given quantity of bitcoins into a
  * representation of the same value denominated in the formatter's units.  For example, a scale
  * value of <code>3</code> specifies a denomination of millibitcoins, because to represent
- * <code>1.0000 BTC</code>, or one bitcoin, in millibitcoins, one shifts the decimal point
- * three places, that is, to <code>1000.0 mBTC</code>.
+ * <code>1.0000 GALI</code>, or one bitcoin, in millibitcoins, one shifts the decimal point
+ * three places, that is, to <code>1000.0 mGALI</code>.
  *
  * <h3>Construction</h3>
  *
@@ -149,7 +149,7 @@ import java.util.regex.Pattern;
  *
  * <blockquote><pre>
  * BtcFormat f = BtcFormat.getInstance();
- * String s = f.format(Coin.COIN); <strong>// "BTC 1.00"</strong>
+ * String s = f.format(Coin.COIN); <strong>// "GALI 1.00"</strong>
  * </pre></blockquote>
  *
  * <p>The first argument to <code>getInstance()</code> can determine
@@ -178,8 +178,8 @@ import java.util.regex.Pattern;
  * <blockquote><pre>
  * BtcFormat s = BtcFormat.getInstance(SYMBOL);
  * Coin value = Coin.parseCoin("0.1234");
- * String mil = s.format(value);              <strong>// "₥฿123.40"</strong>
- * String mic = s.format(value.divide(1000)); <strong>// "µ฿123.40"</strong>
+ * String mil = s.format(value);              <strong>// "₥G123.40"</strong>
+ * String mic = s.format(value.divide(1000)); <strong>// "µG123.40"</strong>
  * </blockquote>
  *
  * <p>An alternative way to specify whether you want an auto- or fixed-denomination formatter
@@ -200,9 +200,9 @@ import java.util.regex.Pattern;
  * differently the same one-bitcoin value:
  *
  * <blockquote><pre>
- * <strong>// Next line returns "1,00 BTC"</strong>
+ * <strong>// Next line returns "1,00 GALI"</strong>
  * BtcFormat.getInstance(Locale.GERMANY).format(Coin.COIN);
- * <strong>// Next line returns "1,00 ฿"</strong>
+ * <strong>// Next line returns "1,00 G"</strong>
  * BtcFormat.getInstance(SYMBOL, Locale.GERMANY).format(Coin.COIN);
  * <strong>// Next line returns "1.000,00"</strong>
  * BtcFormat.getMilliInstance(Locale.GERMANY).format(Coin.COIN);
@@ -235,26 +235,12 @@ import java.util.regex.Pattern;
  * object.  Its {@link Builder#build()} method constructs and returns a <code>BtcFormat</code> instance
  * configured according to those settings.
  *
- * <p>In addition to setter-methods that correspond to the factory-method parameters explained
- * above, a <code>Builder</code> also allows you to specify custom formatting and parsing
- * patterns and currency symbols and codes.  For example, rather than using the default
- * currency symbol, which has the same unicode character point as the national currency symbol of
- * Thailand, some people prefer to use a capital letter "B" with a vertical overstrike.
- *
- * <blockquote><pre>
- * BtcFormat.Builder builder = BtcFormat.builder();
- * builder.style(SYMBOL);
- * builder.symbol("B&#x5c;u20e6"); <strong>// unicode char "double vertical stroke overlay"</strong>
- * BtcFormat f = builder.build();
- * String out = f.format(COIN); <strong>// "B⃦1.00" depending on locale</strong>
- * </pre></blockquote>
- *
  * The <code>Builder</code> methods are chainable.  So, for example, if you are
  * deferential to ISO 4217, you might construct a formatter in a single line this way:
  *
  * <blockquote><pre>
- * BtcFormat f = BtcFormat.builder().style(CODE).code("XBT").build();
- * String out = f.format(COIN); <strong>// "XBT 1.00"</strong>
+ * BtcFormat f = BtcFormat.builder().style(CODE).code("GALI").build();
+ * String out = f.format(COIN); <strong>// "GALI 1.00"</strong>
  * </pre></blockquote>
  *
  * <p>See the documentation of the {@link BtcFormat.Builder} class for details.
@@ -324,9 +310,9 @@ import java.util.regex.Pattern;
  * <blockquote><pre>
  * BtcFormat de = BtcFormat.getInstance(Locale.GERMANY);
  * FieldPosition currField = new FieldPosition(NumberFormat.Field.CURRENCY);
- * <strong>// next line formats the value as "987.654.321,23 µBTC"</strong>
+ * <strong>// next line formats the value as "987.654.321,23 µGALI"</strong>
  * String output = de.format(valueOf(98765432123L), new StringBuffer(), currField);
- * <strong>// next line sets variable currencyCode to "µBTC"</strong>
+ * <strong>// next line sets variable currencyCode to "µGALI"</strong>
  * String currencyCode = output.substring(currField.getBeginIndex(), currField.getEndIndex()));
  * </pre></blockquote>
  *
@@ -338,9 +324,9 @@ import java.util.regex.Pattern;
  * <blockquote><pre>
  * BtcFixedFormat kilo = (BtcFixedFormat)BtcFormat(-3); <strong>// scale -3 for kilocoins</strong>
  * Coin value = Coin.parseCoin("1230");
- * <strong>// variable coded will be set to "kBTC 1.23"</strong>
+ * <strong>// variable coded will be set to "kGALI 1.23"</strong>
  * String coded = kilo.code() + " " + kilo.format(value);
- * <strong>// variable symbolic will be set to "k฿1.23"</strong>
+ * <strong>// variable symbolic will be set to "kG1.23"</strong>
  * String symbolic = kilo.symbol() + kilo.format(value);
  * BtcFormat(4).code(); <strong>// unnamed denomination has no code; raises exception</strong>
  * </pre></blockquote>
@@ -409,11 +395,11 @@ import java.util.regex.Pattern;
  * {@link BtcAutoFormat} configured with applicable non-default pattern) will recognize a
  * variety of currency symbols and codes, including all standard international (metric)
  * prefixes from micro to mega.  For example, denominational units of microcoins may be
- * specified by <code>µ฿</code>, <code>u฿</code>, <code>µB⃦</code>, <code>µɃ</code>,
- * <code>µBTC</code> or other appropriate permutations of those characters.  Additionally, if
- * either or both of a custom currency code or symbol is configured using {@link
- * BtcFormat.Builder#code} or {@link BtcFormat.Builder#code}, then such code or symbol will
- * be recognized in addition to those recognized by default..
+ * specified by <code>µG</code>, <code>uG</code>, <code>µGALI</code> or other appropriate
+ * permutations of those characters.  Additionally, if either or both of a custom currency
+ * code or symbol is configured using {@link BtcFormat.Builder#code} or
+ * {@link BtcFormat.Builder#code}, then such code or symbol will be recognized in addition to
+ * those recognized by default..
  *
  * <p>Instances of this class that recognize currency signs will recognize both currency
  * symbols and codes, regardless of which that instance uses for formatting.  However, if the
@@ -494,12 +480,12 @@ public abstract class BtcFormat extends Format {
      * comparisons.
      */
 
-    /** The conventional international currency code for bitcoins: "BTC" */
+    /** The conventional international currency code for galilel: "GALI" */
     private static final String COIN_CODE = CoinDefinition.coinTicker;
     /** The default currency symbols for bitcoins */
-    private static final String COIN_SYMBOL = "D";
+    private static final String COIN_SYMBOL = "G";
     /** An alternative currency symbol to use in locales where the default symbol is used for the national currency. */
-    protected static final String COIN_SYMBOL_ALT = "D";
+    protected static final String COIN_SYMBOL_ALT = "G";
 
     protected final DecimalFormat numberFormat; // warning: mutable
     protected final int minimumFractionDigits;
@@ -763,7 +749,7 @@ public abstract class BtcFormat extends Format {
     /**
      * Return a new instance of this class using all defaults.  The returned formatter will
      * auto-denominate values so as to minimize zeros without loss of precision and display a
-     * currency code, for example "<code>BTC</code>", to indicate that denomination.  The
+     * currency code, for example "<code>GALI</code>", to indicate that denomination.  The
      * returned object will uses the default locale for formatting the number and placement of
      * the currency-code.  Two fractional decimal places will be displayed in all formatted numbers.
      */
@@ -771,14 +757,14 @@ public abstract class BtcFormat extends Format {
 
     /**
      * Return a new auto-denominating instance that will indicate units using a currency
-     * symbol, for example, <code>"฿"</code>.  Formatting and parsing will be done
+     * symbol, for example, <code>"G"</code>.  Formatting and parsing will be done
      * according to the default locale.
      */
     public static BtcFormat getSymbolInstance() { return getSymbolInstance(defaultLocale()); }
 
     /**
      * Return a new auto-denominating instance that will indicate units using a currency
-     * code, for example, <code>"BTC"</code>.  Formatting and parsing will be done
+     * code, for example, <code>"GALI"</code>.  Formatting and parsing will be done
      * according to the default locale.
      */
     public static BtcFormat getCodeInstance() { return getCodeInstance(defaultLocale()); }
@@ -786,7 +772,7 @@ public abstract class BtcFormat extends Format {
     /**
      * Return a new symbol-style auto-formatter with the given number of fractional decimal
      * places.  Denominational units will be indicated using a currency symbol, for example,
-     * <code>"฿"</code>.  The returned object will format the fraction-part of numbers using
+     * <code>"G"</code>.  The returned object will format the fraction-part of numbers using
      * the given number of decimal places, or fewer as necessary to avoid giving a place to
      * fractional satoshis.  Formatting and parsing will be done according to the default
      * locale.
@@ -798,7 +784,7 @@ public abstract class BtcFormat extends Format {
     /**
      * Return a new code-style auto-formatter with the given number of fractional decimal
      * places.  Denominational units will be indicated using a currency code, for example,
-     * <code>"BTC"</code>.  The returned object will format the fraction-part of numbers using
+     * <code>"GALI"</code>.  The returned object will format the fraction-part of numbers using
      * the given number of decimal places, or fewer as necessary to avoid giving a place to
      * fractional satoshis.  Formatting and parsing will be done according to the default
      * locale.
@@ -810,14 +796,14 @@ public abstract class BtcFormat extends Format {
     /**
      * Return a new code-style auto-formatter for the given locale.  The returned object will
      * select denominational units based on each value being formatted, and will indicate those
-     * units using a currency code, for example, <code>"mBTC"</code>.
+     * units using a currency code, for example, <code>"mGALI"</code>.
      */
     public static BtcFormat getInstance(Locale locale) { return getCodeInstance(locale); }
 
     /**
      * Return a new code-style auto-formatter for the given locale.  The returned object will
      * select denominational units based on each value being formatted, and will indicate those
-     * units using a currency code, for example, <code>"mBTC"</code>.
+     * units using a currency code, for example, <code>"mGALI"</code>.
      */
     public static BtcFormat getCodeInstance(Locale locale) { return getInstance(CODE, locale); }
 
@@ -825,7 +811,7 @@ public abstract class BtcFormat extends Format {
      * Return a new code-style auto-formatter for the given locale with the given number of
      * fraction places.  The returned object will select denominational units based on each
      * value being formatted, and will indicate those units using a currency code, for example,
-     * <code>"mBTC"</code>.  The returned object will format the fraction-part of numbers using
+     * <code>"mGALI"</code>.  The returned object will format the fraction-part of numbers using
      * the given number of decimal places, or fewer as necessary to avoid giving a place to
      * fractional satoshis.
      */
@@ -837,7 +823,7 @@ public abstract class BtcFormat extends Format {
      * Return a new code-style auto-formatter for the given locale with the given number of
      * fraction places.  The returned object will select denominational units based on each
      * value being formatted, and will indicate those units using a currency code, for example,
-     * <code>"mBTC"</code>.  The returned object will format the fraction-part of numbers using
+     * <code>"mGALI"</code>.  The returned object will format the fraction-part of numbers using
      * the given number of decimal places, or fewer as necessary to avoid giving a place to
      * fractional satoshis.
      */
@@ -848,7 +834,7 @@ public abstract class BtcFormat extends Format {
     /**
      * Return a new symbol-style auto-formatter for the given locale.  The returned object will
      * select denominational units based on each value being formatted, and will indicate those
-     * units using a currency symbol, for example, <code>"µ฿"</code>.
+     * units using a currency symbol, for example, <code>"µG"</code>.
      */
     public static BtcFormat getSymbolInstance(Locale locale) {
 	return getInstance(SYMBOL, locale);
@@ -858,7 +844,7 @@ public abstract class BtcFormat extends Format {
      * Return a new symbol-style auto-formatter for the given locale with the given number of
      * fraction places.  The returned object will select denominational units based on each
      * value being formatted, and will indicate those units using a currency symbol, for example,
-     * <code>"µ฿"</code>.  The returned object will format the fraction-part of numbers using
+     * <code>"µG"</code>.  The returned object will format the fraction-part of numbers using
      * the given number of decimal places, or fewer as necessary to avoid giving a place to
      * fractional satoshis.
      */
@@ -869,7 +855,7 @@ public abstract class BtcFormat extends Format {
     /**
      * Return a new auto-denominating formatter.  The returned object will indicate the
      * denominational units of formatted values using either a currency symbol, such as,
-     * <code>"฿"</code>, or code, such as <code>"mBTC"</code>, depending on the value of
+     * <code>"G"</code>, or code, such as <code>"mGALI"</code>, depending on the value of
      * the argument.  Formatting and parsing will be done according to the default locale.
      */
     public static BtcFormat getInstance(Style style) { return getInstance(style, defaultLocale()); }
@@ -877,8 +863,8 @@ public abstract class BtcFormat extends Format {
     /**
      * Return a new auto-denominating formatter with the given number of fractional decimal
      * places.  The returned object will indicate the denominational units of formatted values
-     * using either a currency symbol, such as, <code>"฿"</code>, or code, such as
-     * <code>"mBTC"</code>, depending on the value of the first argument.  The returned object
+     * using either a currency symbol, such as, <code>"G"</code>, or code, such as
+     * <code>"mGALI"</code>, depending on the value of the first argument.  The returned object
      * will format the fraction-part of numbers using the given number of decimal places, or
      * fewer as necessary to avoid giving a place to fractional satoshis.  Formatting and
      * parsing will be done according to the default locale.
@@ -891,7 +877,7 @@ public abstract class BtcFormat extends Format {
      * Return a new auto-formatter with the given style for the given locale.
      * The returned object that will auto-denominate each formatted value, and
      * will indicate that denomination using either a currency code, such as
-     * "<code>BTC</code>", or symbol, such as "<code>฿</code>", depending on the value
+     * "<code>GALI</code>", or symbol, such as "<code>G</code>", depending on the value
      * of the first argument. 
      * <p>The number of fractional decimal places in formatted number will be two, or fewer
      * as necessary to avoid giving a place to fractional satoshis.
@@ -904,7 +890,7 @@ public abstract class BtcFormat extends Format {
      * Return a new auto-formatter for the given locale with the given number of fraction places.
      * The returned object will automatically-denominate each formatted
      * value, and will indicate that denomination using either a currency code,
-     * such as <code>"mBTC"</code>, or symbol, such as "<code>฿</code>",
+     * such as <code>"mGALI"</code>, or symbol, such as "<code>G</code>",
      * according to the given style argument.  It will format each number
      * according to the given locale.
      *
@@ -1315,7 +1301,7 @@ public abstract class BtcFormat extends Format {
 
     /* Lazy initialization;  No reason to create all these objects unless needed for parsing */
     // coin indicator regex String; TODO: does this need to be volatile?
-    private volatile String ci = "(" + COIN_SYMBOL + "|" + COIN_SYMBOL_ALT + "|B⃦|" + COIN_CODE + "|XBT)";
+    private volatile String ci = "(" + COIN_SYMBOL + "|" + COIN_SYMBOL_ALT + "|" + COIN_CODE + ")";
     private Pattern coinPattern;
     private volatile ScaleMatcher[] denoms;
     ScaleMatcher[] denomMatchers() {

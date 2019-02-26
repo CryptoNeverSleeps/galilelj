@@ -31,43 +31,43 @@ import static com.google.common.base.Preconditions.checkArgument;
 public final class Coin implements Monetary, Comparable<Coin>, Serializable {
 
     /**
-     * Number of decimals for one Bitcoin. This constant is useful for quick adapting to other coins because a lot of
+     * Number of decimals for one GALI. This constant is useful for quick adapting to other coins because a lot of
      * constants derive from it.
      */
     public static final int SMALLEST_UNIT_EXPONENT = 8;
 
     /**
-     * The number of satoshis equal to one bitcoin.
+     * The number of satoshis equal to one GALI.
      */
     private static final long COIN_VALUE = LongMath.pow(10, SMALLEST_UNIT_EXPONENT);
 
     /**
-     * Zero Bitcoins.
+     * Zero GALIs.
      */
     public static final Coin ZERO = Coin.valueOf(0);
 
     /**
-     * One Bitcoin.
+     * One GALI.
      */
     public static final Coin COIN = Coin.valueOf(COIN_VALUE);
 
     /**
-     * 0.01 Bitcoins. This unit is not really used much.
+     * 0.01 GALIs. This unit is not really used much.
      */
     public static final Coin CENT = COIN.divide(100);
 
     /**
-     * 0.001 Bitcoins, also known as 1 mBTC.
+     * 0.001 GALIs, also known as 1 mGALI.
      */
     public static final Coin MILLICOIN = COIN.divide(1000);
 
     /**
-     * 0.000001 Bitcoins, also known as 1 µBTC or 1 uBTC.
+     * 0.000001 GALIs, also known as 1 µGALI or 1 uGALI.
      */
     public static final Coin MICROCOIN = MILLICOIN.divide(1000);
 
     /**
-     * A satoshi is the smallest unit that can be transferred. 100 million of them fit into a Bitcoin.
+     * A satoshi is the smallest unit that can be transferred. 100 million of them fit into a GALI.
      */
     public static final Coin SATOSHI = Coin.valueOf(1);
 
@@ -255,7 +255,7 @@ public final class Coin implements Monetary, Comparable<Coin>, Serializable {
         return this.value;
     }
 
-    private static final MonetaryFormat FRIENDLY_FORMAT = MonetaryFormat.BTC.minDecimals(2).repeatOptionalDecimals(1, 6).postfixCode();
+    private static final MonetaryFormat FRIENDLY_FORMAT = MonetaryFormat.GALI.minDecimals(2).repeatOptionalDecimals(1, 6).postfixCode();
 
     /**
      * Returns the value as a 0.12 type string. More digits after the decimal place will be used
@@ -265,13 +265,13 @@ public final class Coin implements Monetary, Comparable<Coin>, Serializable {
         return FRIENDLY_FORMAT.format(this).toString();
     }
 
-    private static final MonetaryFormat PLAIN_FORMAT = MonetaryFormat.BTC.minDecimals(0).repeatOptionalDecimals(1, 8).noCode();
+    private static final MonetaryFormat PLAIN_FORMAT = MonetaryFormat.GALI.minDecimals(0).repeatOptionalDecimals(1, 8).noCode();
 
     /**
      * <p>
-     * Returns the value as a plain string denominated in BTC.
+     * Returns the value as a plain string denominated in GALI.
      * The result is unformatted with no trailing zeroes.
-     * For instance, a value of 150000 satoshis gives an output string of "0.0015" BTC
+     * For instance, a value of 150000 satoshis gives an output string of "0.0015" GALI
      * </p>
      */
     public String toPlainString() {

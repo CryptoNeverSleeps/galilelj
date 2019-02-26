@@ -4949,7 +4949,7 @@ public class Wallet extends BaseTaggableObject
             if (additionalValueSelected != null)
                 change = change.add(additionalValueSelected);
 
-            // If change is < 0.01 BTC, we will need to have at least minfee to be accepted by the network
+            // If change is < 0.01 GALI, we will need to have at least minfee to be accepted by the network
             if (req.ensureMinRequiredFee && !change.equals(Coin.ZERO) &&
                     change.compareTo(Coin.CENT) < 0 && fees.compareTo(Transaction.REFERENCE_DEFAULT_MIN_TX_FEE) < 0) {
                 // This solution may fit into category 2, but it may also be category 3, we'll check that later
