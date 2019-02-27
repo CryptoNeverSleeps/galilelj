@@ -88,7 +88,7 @@ public class MatiTest {
         Context context = new Context(networkParameters);
         VersionMessage versionMessage = new VersionMessage(networkParameters, 0);
         versionMessage.relayTxesBeforeFilter=false;
-        Peer peer = new Peer(networkParameters,versionMessage,new PeerAddress("localhost",51472),null);
+        Peer peer = new Peer(networkParameters,versionMessage,new PeerAddress("localhost",36001),null);
         peer.addBlocksDownloadedEventListener(new BlocksDownloadedEventListener() {
             @Override
             public void onBlocksDownloaded(Peer peer, Block block, @Nullable FilteredBlock filteredBlock, int blocksLeft) {

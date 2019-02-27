@@ -99,6 +99,41 @@ public class CoinDefinition {
     static public String genesisMerkleRoot = "1dd81cdda448e9346a94f82e0d6c9fa7a876b59124da4dc49b66531d3ef11822";
     static public int genesisBlockValue = 250;                                                                   // main.cpp: LoadBlockIndex
 
+    // main.cpp GetBlockValue(height, fee)
+    public static final Coin GetBlockReward(int height)
+    {
+        Coin nSubsidy = Coin.valueOf(5, 0);
+
+        /* block rewards. */
+        if (height > 430000) {
+            nSubsidy = Coin.valueOf(5, 0);
+        } else if (height > 340000) {
+            nSubsidy = Coin.valueOf(10, 0);
+        } else if (height > 250000) {
+            nSubsidy = Coin.valueOf(13, 5);
+        } else if (height > 205000) {
+            nSubsidy = Coin.valueOf(25, 0);
+        } else if (height > 160000) {
+            nSubsidy = Coin.valueOf(50, 0);
+        } else if (height > 100000) {
+            nSubsidy = Coin.valueOf(60, 0);
+        } else if (height > 42000) {
+            nSubsidy = Coin.valueOf(70, 0);
+        } else if (height > 22000) {
+            nSubsidy = Coin.valueOf(80, 0);
+        } else if (height > 12000) {
+            nSubsidy = Coin.valueOf(90, 0);
+        } else if (height > 1500) {
+            nSubsidy = Coin.valueOf(100, 0);
+        } else if (height > 1) {
+            nSubsidy = Coin.valueOf(1, 0);
+        } else if (height == 1) {
+            nSubsidy = Coin.valueOf(220000, 0);
+        }
+
+        return nSubsidy;
+    }
+
     // taken from the raw data of the block explorer
     static public String genesisTxInBytes = "04ffff001d01043747616c696c656c20436f696e2053746172742040204672696461792c2032352e204d617920323031382030343a30303a303020474d542e";
     public static final String genesisTxPubKey = "87268afdb0fe5548271967f1a67130b7105cd6a828e03909a67962e0ea1f61deb649f6bc3f4cef38c4f35504e51ec112de5c384df7ba0b8d578a4c702b6bf11d5f";
@@ -127,17 +162,42 @@ public class CoinDefinition {
     static public long testnetGenesisBlockNonce = 1745260L;              // main.cpp: LoadBlockIndex
 
     // main.cpp GetBlockValue(height, fee)
-    public static final Coin GetBlockReward(int height)
+    public static final Coin testnetGetBlockReward(int height)
     {
-        int COIN = 1;
-        Coin nSubsidy = Coin.valueOf(100, 0);
-        if (height == 1)
-            nSubsidy = Coin.valueOf(420000, 0);
+        Coin nSubsidy = Coin.valueOf(5, 0);
+
+        /* block rewards. */
+        if (height > 430000) {
+            nSubsidy = Coin.valueOf(5, 0);
+        } else if (height > 340000) {
+            nSubsidy = Coin.valueOf(10, 0);
+        } else if (height > 250000) {
+            nSubsidy = Coin.valueOf(13, 5);
+        } else if (height > 205000) {
+            nSubsidy = Coin.valueOf(25, 0);
+        } else if (height > 160000) {
+            nSubsidy = Coin.valueOf(50, 0);
+        } else if (height > 100000) {
+            nSubsidy = Coin.valueOf(60, 0);
+        } else if (height > 42000) {
+            nSubsidy = Coin.valueOf(70, 0);
+        } else if (height > 22000) {
+            nSubsidy = Coin.valueOf(80, 0);
+        } else if (height > 12000) {
+            nSubsidy = Coin.valueOf(90, 0);
+        } else if (height > 200) {
+            nSubsidy = Coin.valueOf(100, 0);
+        } else if (height > 1) {
+            nSubsidy = Coin.valueOf(1, 0);
+        } else if (height == 1) {
+            nSubsidy = Coin.valueOf(220000, 0);
+        }
+
         return nSubsidy;
     }
 
-    public static int subsidyDecreaseBlockCount = 210000;                             // main.cpp GetBlockValue(height, fee)
-    public static BigInteger proofOfWorkLimit = Utils.decodeCompactBits(0x1e0fffffL); // main.cpp bnProofOfWorkLimit (~uint256(0) >> 20); // GALI starting difficulty is 1 / 2^12
+    public static int subsidyDecreaseBlockCount = 210000;                             // chainparams.cpp: nSubsidyHalvingInterval
+    public static BigInteger proofOfWorkLimit = Utils.decodeCompactBits(0x1e0fffffL); // main.cpp: bnProofOfWorkLimit (~uint256(0) >> 20); // GALI starting difficulty is 1 / 2^12
 
     // net.cpp strDNSSeed
     static public String[] testnetDnsSeeds = new String[] {
@@ -151,9 +211,9 @@ public class CoinDefinition {
             "seed8.testnet.galilel.cloud"
     };
 
-    // from main.h: CAlert::CheckSignature
-    public static final String SATOSHI_KEY = "0000098d3ba6ba6e7423fa5cbd6a89e0a9a5348f88d332b44a5cb1a8b7ed2c1eaa335fc8dc4f012cb8241cc0bdafd6ca70c5f5448916e4e6f511bcd746ed57dc50";
-    public static final String TESTNET_SATOSHI_KEY = "000010e83b2703ccf322f7dbd62dd5855ac7c10bd055814ce121ba32607d573b8810c02c0582aed05b4deb9c4b77b26d92428c61256cd42774babea0a073b2ed0c9";
+    // from chainparams.cpp: vAlertPubKey
+    public static final String SATOSHI_KEY = "98306db20be5c53b93678e2e41c9def7af38197280c65e813f682adf2ed501ac186022562dbdf2ce3204d07432660fb61ecad8e78b6b8d39c568fb892db8ecb736";
+    public static final String TESTNET_SATOSHI_KEY = "04678afdb0fe5548271967f1a67130b7105cd6a828e03909a67962e0ea1f61deb649f6bc3f4cef38c4f35504e51ec112de5c384df7ba0b8d578a4c702b6bf11d5f";
 
     // The string returned by getId() for the main, production network where people trade things.
     public static final String ID_MAINNET = "org.galilel.production";

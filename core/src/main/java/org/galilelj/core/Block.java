@@ -235,8 +235,12 @@ public class Block extends Message {
      */
 
     public Coin getBlockInflation(int height) {
-        //return Utils.toNanoCoins(50, 0).shiftRight(height / context.getSubsidyDecreaseBlockCount());
-        return /*Utils.toNanoCoins(*/CoinDefinition.GetBlockReward(height)/*, 0)*/;
+
+        // check if we are in testnet.
+        if (params.getId().equals(NetworkParameters.ID_TESTNET)) {
+            return CoinDefinition.testnetGetBlockReward(height);
+        }
+        return CoinDefinition.GetBlockReward(height);
     }
 
     /**
@@ -268,15 +272,6 @@ public class Block extends Message {
         }
         transactionBytesValid = serializer.isParseRetainMode();
     }
-
-    private static final long START_MASTERNODE_PAYMENTS_1 = 1401033600L; //Sun, 25 May 2014 16:00:00 GMT
-    private static final long START_MASTERNODE_PAYMENTS_STOP_1 = 1401134533L; // Mon, 26 May 2014 20:02:13 GMT
-
-    private static final long START_MASTERNODE_PAYMENTS = 1403728576L; //Fri, 20 Jun 2014 16:00:00 GMT
-    //private static final long START_MASTERNODE_PAYMENTS_STOP = ?
-
-    private static final long START_MASTERNODE_PAYMENTS_TESTNET_1 = 1401757793;
-    private static final long START_MASTERNODE_PAYMENTS_TESTNET = 1403568776L;
 
     @Override
     protected void parse() throws ProtocolException {
