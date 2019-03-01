@@ -75,7 +75,6 @@ public class CoinDefinition {
     // Galilel 3.2.0
     public static final int PROTOCOL_VERSION = 70721;          // version.h PROTOCOL_VERSION
     public static final int MIN_PROTOCOL_VERSION = 70721;      // version.h MIN_PROTO_VERSION
-    public static final int BLOCK_CURRENTVERSION = 4;          // CBlockHeader::CURRENT_VERSION
     public static final int MAX_BLOCK_SIZE = 1 * 1000 * 1000;
     public static final boolean supportsBloomFiltering = true; // Requires PROTOCOL_VERSION 70000 in the client
     public static final int Port = 36001;                      // protocol.h GetDefaultPort(testnet=false)
@@ -97,7 +96,7 @@ public class CoinDefinition {
     static public long genesisBlockNonce = 121699L;                                                              // main.cpp: LoadBlockIndex
     static public String genesisHash = "00000a15f1dd0b452c85b89d7e8a2968205e19550b1c2f12909367a04afc2855";       // main.cpp: hashGenesisBlock
     static public String genesisMerkleRoot = "1dd81cdda448e9346a94f82e0d6c9fa7a876b59124da4dc49b66531d3ef11822";
-    static public int genesisBlockValue = 250;                                                                   // main.cpp: LoadBlockIndex
+    static public int genesisBlockValue = 0;                                                                     // chainparams.cpp: txNew.vout[0].nValue
 
     // main.cpp GetBlockValue(height, fee)
     public static final Coin GetBlockReward(int height)
@@ -140,14 +139,14 @@ public class CoinDefinition {
 
     // net.cpp strDNSSeed
     static public String[] dnsSeeds = new String[] {
-            "seed1.galilel.cloud",
-            "seed2.galilel.cloud",
-            "seed3.galilel.cloud",
-            "seed4.galilel.cloud",
-            "seed5.galilel.cloud",
-            "seed6.galilel.cloud",
-            "seed7.galilel.cloud",
-            "seed8.galilel.cloud"
+        "seed1.galilel.cloud",
+        "seed2.galilel.cloud",
+        "seed3.galilel.cloud",
+        "seed4.galilel.cloud",
+        "seed5.galilel.cloud",
+        "seed6.galilel.cloud",
+        "seed7.galilel.cloud",
+        "seed8.galilel.cloud"
     };
     public static int minBroadcastConnections = 3; // 0 for default; we need more peers.
 
@@ -201,14 +200,14 @@ public class CoinDefinition {
 
     // net.cpp strDNSSeed
     static public String[] testnetDnsSeeds = new String[] {
-            "seed1.testnet.galilel.cloud",
-            "seed2.testnet.galilel.cloud",
-            "seed3.testnet.galilel.cloud",
-            "seed4.testnet.galilel.cloud",
-            "seed5.testnet.galilel.cloud",
-            "seed6.testnet.galilel.cloud",
-            "seed7.testnet.galilel.cloud",
-            "seed8.testnet.galilel.cloud"
+        "seed1.testnet.galilel.cloud",
+        "seed2.testnet.galilel.cloud",
+        "seed3.testnet.galilel.cloud",
+        "seed4.testnet.galilel.cloud",
+        "seed5.testnet.galilel.cloud",
+        "seed6.testnet.galilel.cloud",
+        "seed7.testnet.galilel.cloud",
+        "seed8.testnet.galilel.cloud"
     };
 
     // from chainparams.cpp: vAlertPubKey

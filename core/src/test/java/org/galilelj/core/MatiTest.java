@@ -66,7 +66,7 @@ public class MatiTest {
         Context context = new Context(networkParameters);
         VersionMessage versionMessage = new VersionMessage(networkParameters, 0);
         versionMessage.relayTxesBeforeFilter=false;
-        Peer peer = new Peer(networkParameters,versionMessage,new PeerAddress("warrows.fr",51474),null);
+        Peer peer = new Peer(networkParameters,versionMessage,new PeerAddress("seed1.testnet.galilel.cloud", 56123), null);
         peer.addBlocksDownloadedEventListener(new BlocksDownloadedEventListener() {
             @Override
             public void onBlocksDownloaded(Peer peer, Block block, @Nullable FilteredBlock filteredBlock, int blocksLeft) {
@@ -326,11 +326,8 @@ public class MatiTest {
         peerGroup.addPeerDiscovery(new PeerDiscovery() {
             @Override
             public InetSocketAddress[] getPeers(long services, long timeoutValue, TimeUnit timeoutUnit) throws PeerDiscoveryException {
-                return new InetSocketAddress[]{
-                        //new InetSocketAddress("202.5.21.31",51474),
-                        new InetSocketAddress("warrows.fr",51474)
-                        //new InetSocketAddress("localhost",51474)
-                        //new InetSocketAddress("88.198.192.110",51474)
+                return new InetSocketAddress[] {
+                    new InetSocketAddress("seed1.testnet.galilel.cloud", 56123)
                 };
             }
 
@@ -711,11 +708,8 @@ public class MatiTest {
         peerGroup.addPeerDiscovery(new PeerDiscovery() {
             @Override
             public InetSocketAddress[] getPeers(long services, long timeoutValue, TimeUnit timeoutUnit) throws PeerDiscoveryException {
-                return new InetSocketAddress[]{
-                        //new InetSocketAddress("202.5.21.31",51474),
-                        new InetSocketAddress("185.101.98.175",8443)
-                        //new InetSocketAddress("localhost",51474)
-                        //new InetSocketAddress("88.198.192.110",51474)
+                return new InetSocketAddress[] {
+                    new InetSocketAddress("seed1.testnet.galilel.cloud", 56123)
                 };
             }
 
@@ -836,11 +830,8 @@ public class MatiTest {
         peerGroup.addPeerDiscovery(new PeerDiscovery() {
             @Override
             public InetSocketAddress[] getPeers(long services, long timeoutValue, TimeUnit timeoutUnit) throws PeerDiscoveryException {
-                return new InetSocketAddress[]{
-                        //new InetSocketAddress("202.5.21.31",51474),
-                        new InetSocketAddress("185.101.98.175",8443)
-                        //new InetSocketAddress("localhost",51474)
-                        //new InetSocketAddress("88.198.192.110",51474)
+                return new InetSocketAddress[] {
+                    new InetSocketAddress("seed1.testnet.galilel.cloud", 56123)
                 };
             }
 
