@@ -139,14 +139,7 @@ public class CoinDefinition {
 
     // net.cpp strDNSSeed
     static public String[] dnsSeeds = new String[] {
-        "seed1.galilel.cloud",
-        "seed2.galilel.cloud",
-        "seed3.galilel.cloud",
-        "seed4.galilel.cloud",
-        "seed5.galilel.cloud",
-        "seed6.galilel.cloud",
-        "seed7.galilel.cloud",
-        "seed8.galilel.cloud"
+        "mobile.galilel.cloud"
     };
     public static int minBroadcastConnections = 3; // 0 for default; we need more peers.
 
@@ -200,14 +193,7 @@ public class CoinDefinition {
 
     // net.cpp strDNSSeed
     static public String[] testnetDnsSeeds = new String[] {
-        "seed1.testnet.galilel.cloud",
-        "seed2.testnet.galilel.cloud",
-        "seed3.testnet.galilel.cloud",
-        "seed4.testnet.galilel.cloud",
-        "seed5.testnet.galilel.cloud",
-        "seed6.testnet.galilel.cloud",
-        "seed7.testnet.galilel.cloud",
-        "seed8.testnet.galilel.cloud"
+        "mobile.testnet.galilel.cloud"
     };
 
     // from chainparams.cpp: vAlertPubKey
