@@ -81,8 +81,8 @@ public class CoinDefinition {
     public static final int TestPort = 56123;                  // protocol.h GetDefaultPort(testnet=true)
 
     // LibZerocoin starting block height
-    public static final long MAINNET_ZEROCOIN_STARTING_BLOCK_HEIGHT = 245000;
-    public static final long TESTNET_ZEROCOIN_STARTING_BLOCK_HEIGHT = 250;
+    public static final long MAINNET_ZEROCOIN_STARTING_BLOCK_HEIGHT = 281451;
+    public static final long TESTNET_ZEROCOIN_STARTING_BLOCK_HEIGHT = 2181;
 
     // Production
     public static final int AddressHeader = 68;                // base58.h CBitcoinAddress::PUBKEY_ADDRESS
