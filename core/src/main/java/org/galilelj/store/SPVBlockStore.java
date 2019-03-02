@@ -162,7 +162,7 @@ public class SPVBlockStore implements BlockStore {
         lock.lock();
         try {
             int cursor = getRingCursor(buffer);
-            if (cursor == getFileSize()) {
+            if (cursor + RECORD_SIZE_ZEROCOIN > getFileSize()) {
                 // Wrapped around.
                 cursor = FILE_PROLOGUE_BYTES;
             }
@@ -171,6 +171,11 @@ public class SPVBlockStore implements BlockStore {
             notFoundCache.remove(hash);
             buffer.put(hash.getBytes());
             block.serializeCompact(buffer);
+
+            // align non-zerocoin block to have the same size in the storage as zerocoin block
+            if (!Block.isZerocoinHeight(params, block.getHeight()))
+                buffer.put(new byte[RECORD_SIZE_ZEROCOIN - RECORD_SIZE]);
+
             setRingCursor(buffer, buffer.position());
             blockCache.put(hash, block);
         } finally { lock.unlock(); }
@@ -198,18 +203,12 @@ public class SPVBlockStore implements BlockStore {
             if (!isChainHead && lastChainHead == null){
                 getChainHead();
             }
-            int recordSize = Block.isZerocoinHeight(
-                    params,
-                    lastChainHead!=null ? lastChainHead.getHeight() : 0)
-                    ?
-                    RECORD_SIZE_ZEROCOIN
-                    :
-                    RECORD_SIZE;
+            final int recordSize = RECORD_SIZE_ZEROCOIN;
             do {
-                cursor -=  recordSize;//RECORD_SIZE;
+                cursor -=  recordSize;
                 if (cursor < FILE_PROLOGUE_BYTES) {
                     // We hit the start, so wrap around.
-                    cursor = fileSize - recordSize;//RECORD_SIZE;
+                    cursor = fileSize - recordSize;
                 }
                 // Cursor is now at the start of the next record to check, so read the hash and compare it.
                 buffer.position(cursor);
@@ -304,7 +303,7 @@ public class SPVBlockStore implements BlockStore {
     //   32 bytes hash of the header
     //   12 bytes of chain work
     //    4 bytes of height
-    //   80 bytes of block header data
+    //  112 bytes of block header data (for non-zerocoin header (80 bytes) missing 22 bytes fill with zeros)
     protected static final int FILE_PROLOGUE_BYTES = 1024;
 
     /** Returns the offset from the file start where the latest block should be written (end of prev block). */

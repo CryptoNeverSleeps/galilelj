@@ -75,7 +75,7 @@ public class CoinDefinition {
     // Galilel 3.2.0
     public static final int PROTOCOL_VERSION = 70721;          // version.h PROTOCOL_VERSION
     public static final int MIN_PROTOCOL_VERSION = 70721;      // version.h MIN_PROTO_VERSION
-    public static final int MAX_BLOCK_SIZE = 1 * 1000 * 1000;
+    public static final int MAX_BLOCK_SIZE = 2 * 1000 * 1000;  // block.h MAX_BLOCK_SIZE_CURRENT
     public static final boolean supportsBloomFiltering = true; // Requires PROTOCOL_VERSION 70000 in the client
     public static final int Port = 36001;                      // protocol.h GetDefaultPort(testnet=false)
     public static final int TestPort = 56123;                  // protocol.h GetDefaultPort(testnet=true)

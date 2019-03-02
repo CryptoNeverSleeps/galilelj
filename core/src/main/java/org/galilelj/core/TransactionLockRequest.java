@@ -13,7 +13,7 @@ import static java.lang.Math.max;
 public class TransactionLockRequest extends Transaction {
     private static final Logger log = LoggerFactory.getLogger(TransactionLockRequest.class);
     public static final int TIMEOUT_SECONDS = 5 * 60;
-    public static final Coin MIN_FEE = Coin.valueOf(100000);
+    public static final Coin MIN_FEE = Coin.valueOf(CoinDefinition.INSTANTX_FEE);
 
     long timeCreated;
     public static final int WARN_MANY_INPUTS = 100;

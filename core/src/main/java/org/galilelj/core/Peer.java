@@ -1106,6 +1106,7 @@ public class Peer extends PeerSocketHandler {
                         blockChainDownloadLocked(orphanRoot.getHash());
                     } else {
                         log.info("Did not start chain download on solved block due to in-flight header download.");
+                        blockChainDownloadLocked(Sha256Hash.ZERO_HASH); // continue headers downloading
                     }
                 } finally {
                     lock.unlock();

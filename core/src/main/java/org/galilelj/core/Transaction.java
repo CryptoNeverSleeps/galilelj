@@ -98,13 +98,13 @@ public class Transaction extends ChildMessage {
     /**
      * If feePerKb is lower than this, Bitcoin Core will treat it as if there were no fee.
      */
-    public static final Coin REFERENCE_DEFAULT_MIN_TX_FEE = Coin.valueOf(CoinDefinition.DEFAULT_MIN_TX_FEE); // 0.05 mBTC
+    public static final Coin REFERENCE_DEFAULT_MIN_TX_FEE = Coin.valueOf(CoinDefinition.DEFAULT_MIN_TX_FEE);
 
     /**
      * If using this feePerKb, transactions will get confirmed within the next couple of blocks.
      * This should be adjusted from time to time. Last adjustment: March 2016.
      */
-    public static final Coin DEFAULT_TX_FEE = Coin.valueOf(CoinDefinition.DEFAULT_MIN_TX_FEE); // 0.5 mBTC
+    public static final Coin DEFAULT_TX_FEE = Coin.valueOf(CoinDefinition.DEFAULT_MIN_TX_FEE);
 
     /**
      * Any standard (ie pay-to-address) output smaller than this value (in satoshis) will most likely be rejected by the network.
@@ -546,6 +546,7 @@ public class Transaction extends ChildMessage {
     @Override
     protected void parse() throws ProtocolException {
         cursor = offset;
+        System.out.println("Starting reading transaction cursor offset: "+cursor);
         version = readUint32();
         optimalEncodingMessageSize = 4;
 
@@ -607,7 +608,10 @@ public class Transaction extends ChildMessage {
      * position in a block but by the data in the inputs.
      */
     public boolean isCoinBase() {
-        return inputs.size() == 1 && inputs.get(0).isCoinBase();
+        boolean a = inputs.size() == 1;
+        boolean b = inputs.get(0).isCoinBase();
+        boolean c = inputs.get(0).isZeroCoinSpend();
+        return a && b && !c;
     }
 
     /**
@@ -693,13 +697,9 @@ public class Transaction extends ChildMessage {
                     }
                 }
                 if (in.hasSequence()) {
-                    if (in.isZcspend()){
-                        s.append("\n          denomination:").append(in.getSequenceNumber());
-                    }else {
-                        s.append("\n          sequence:").append(Long.toHexString(in.getSequenceNumber()));
-                        if (in.isOptInFullRBF())
-                            s.append(", opts into full RBF");
-                    }
+                    s.append("\n          sequence:").append(Long.toHexString(in.getSequenceNumber()));
+                    if (in.isOptInFullRBF())
+                        s.append(", opts into full RBF");
                 }
             } catch (Exception e) {
                 s.append("[exception: ").append(e.getMessage()).append("]");
@@ -1250,16 +1250,9 @@ public class Transaction extends ChildMessage {
         Coin valueOut = Coin.ZERO;
         HashSet<TransactionOutPoint> outpoints = new HashSet<TransactionOutPoint>();
         for (TransactionInput input : inputs) {
-            if (input.isZcspend()){
-                // If it's a zc_spend then the connected output parentTx hash will be 000.. as they are new minted coins.
-                // for now i can  remove the verifications as there is no wallet mixing zc_spends and regular gali spend
-                // but this needs to be checked again in the future.
-                //log.warn("Duplicated output in zc transaction " + toString());
-            }else {
-                if (outpoints.contains(input.getOutpoint())) {
-                    log.error("Duplicated output in a transaction " + toString());
-                    throw new VerificationException.DuplicatedOutPoint();
-                }
+            if (outpoints.contains(input.getOutpoint()) && !input.isZeroCoinSpend()) {
+                log.error("Duplicated output in a transaction "+toString());
+                throw new VerificationException.DuplicatedOutPoint();
             }
             outpoints.add(input.getOutpoint());
         }
@@ -1282,7 +1275,6 @@ public class Transaction extends ChildMessage {
             if (scriptBytes.length < 2 || scriptBytes.length > 100) {
                 log.info("#### Invalid transaction, "+toString());
                 log.info("### invalid script: "+ Hex.toHexString(scriptBytes));
-                //log.info("#### Invalid transaction script, "+inputs.get(0).toString());
                 throw new VerificationException.CoinbaseScriptSizeOutOfRange();
             }
         } else {
@@ -1313,8 +1305,9 @@ public class Transaction extends ChildMessage {
      */
     public boolean isOptInFullRBF() {
         for (TransactionInput input : getInputs())
-            if (input.isOptInFullRBF())
+            if (input.isOptInFullRBF() && !input.isZeroCoinSpend())
                 return true;
+
         return false;
     }
 

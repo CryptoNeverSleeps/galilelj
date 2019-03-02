@@ -60,13 +60,13 @@ public class Block extends Message {
 
     /** How many bytes are required to represent a block header WITHOUT the trailing 00 length byte. */
     public static final int HEADER_SIZE = 80;
-    /*** LibZerocoin blocks header size */
+    /*** Zerocoin blocks header size */
     public static final int ZEROCOIN_HEADER_SIZE = 112;
 
     static final long ALLOWED_TIME_DRIFT = 2 * 60 * 60; // Same value as Bitcoin Core.
 
     /**
-     * LibZerocoin block version
+     * Zerocoin block version
      * Includes an accumulator on the block.
      */
     public static final long ZEROCOIN_BLOCK_VERSION = 4;
@@ -78,7 +78,7 @@ public class Block extends Message {
      * upgrade everyone to change this, so Bitcoin can continue to grow. For now it exists as an anti-DoS measure to
      * avoid somebody creating a titanically huge but valid block and forcing everyone to download/store it forever.
      */
-    public static final int MAX_BLOCK_SIZE = CoinDefinition.MAX_BLOCK_SIZE; //1 * 1000 * 1000;
+    public static final int MAX_BLOCK_SIZE = CoinDefinition.MAX_BLOCK_SIZE;
     /**
      * A "sigop" is a signature verification operation. Because they're expensive we also impose a separate limit on
      * the number in a block to prevent somebody mining a huge block that has way more sigops than normal, so is very
@@ -118,7 +118,7 @@ public class Block extends Message {
     private Sha256Hash hash;
 
     /**
-     * LibZerocoin accumulator
+     * Zerocoin accumulator
      */
     private Sha256Hash zeroCoinAccumulator;
 
