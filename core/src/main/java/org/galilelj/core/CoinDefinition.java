@@ -73,8 +73,8 @@ public class CoinDefinition {
     public static final boolean feeCanBeRaised = false;
 
     // Galilel 3.2.0
-    public static final int PROTOCOL_VERSION = 70721;          // version.h PROTOCOL_VERSION
-    public static final int MIN_PROTOCOL_VERSION = 70721;      // version.h MIN_PROTO_VERSION
+    public static final int PROTOCOL_VERSION = 70722;          // version.h PROTOCOL_VERSION
+    public static final int MIN_PROTOCOL_VERSION = 70722;      // version.h MIN_PEER_PROTO_VERSION_AFTER_ENFORCEMENT
     public static final int MAX_BLOCK_SIZE = 2 * 1000 * 1000;  // block.h MAX_BLOCK_SIZE_CURRENT
     public static final boolean supportsBloomFiltering = true; // Requires PROTOCOL_VERSION 70000 in the client
     public static final int Port = 36001;                      // protocol.h GetDefaultPort(testnet=false)
