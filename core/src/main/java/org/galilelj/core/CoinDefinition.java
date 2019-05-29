@@ -33,11 +33,11 @@ public class CoinDefinition {
     };
     public static final UnspentAPIType UnspentAPI = UnspentAPIType.Cryptoid;
 
-    public static final String BLOCKEXPLORER_BASE_URL_PROD = "https://explorer.galilel.cloud/"; // blockr.io
+    public static final String BLOCKEXPLORER_BASE_URL_PROD = "https://explorer.galilel.org/"; // blockr.io
     public static final String BLOCKEXPLORER_ADDRESS_PATH = "address/";                         // blockr.io path
     public static final String BLOCKEXPLORER_TRANSACTION_PATH = "tx/";                          // blockr.io path
     public static final String BLOCKEXPLORER_BLOCK_PATH = "block/";                             // blockr.io path
-    public static final String BLOCKEXPLORER_BASE_URL_TEST = "https://explorer.testnet.galilel.cloud/";
+    public static final String BLOCKEXPLORER_BASE_URL_TEST = "https://explorer.testnet.galilel.org/";
 
     public static final String DONATION_ADDRESS = "UUr5nDmykhun1HWM7mJAqLVeLzoGtx19dX";         // Galilel donation address
 
@@ -139,8 +139,8 @@ public class CoinDefinition {
 
     // net.cpp strDNSSeed
     static public String[] dnsSeeds = new String[] {
-        "eu1.galilel.cloud",
-        "eu2.galilel.cloud"
+        "eu1.galilel.org",
+        "eu2.galilel.org"
     };
     public static int minBroadcastConnections = 3; // 0 for default; we need more peers.
 
@@ -194,8 +194,8 @@ public class CoinDefinition {
 
     // net.cpp strDNSSeed
     static public String[] testnetDnsSeeds = new String[] {
-        "eu1.testnet.galilel.cloud",
-        "eu2.testnet.galilel.cloud"
+        "eu1.testnet.galilel.org",
+        "eu2.testnet.galilel.org"
     };
 
     // from chainparams.cpp: vAlertPubKey

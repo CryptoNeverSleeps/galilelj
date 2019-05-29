@@ -66,7 +66,7 @@ public class MatiTest {
         Context context = new Context(networkParameters);
         VersionMessage versionMessage = new VersionMessage(networkParameters, 0);
         versionMessage.relayTxesBeforeFilter=false;
-        Peer peer = new Peer(networkParameters,versionMessage,new PeerAddress("eu1.testnet.galilel.cloud", 56123), null);
+        Peer peer = new Peer(networkParameters,versionMessage,new PeerAddress("eu1.testnet.galilel.org", 56123), null);
         peer.addBlocksDownloadedEventListener(new BlocksDownloadedEventListener() {
             @Override
             public void onBlocksDownloaded(Peer peer, Block block, @Nullable FilteredBlock filteredBlock, int blocksLeft) {
@@ -327,7 +327,7 @@ public class MatiTest {
             @Override
             public InetSocketAddress[] getPeers(long services, long timeoutValue, TimeUnit timeoutUnit) throws PeerDiscoveryException {
                 return new InetSocketAddress[] {
-                    new InetSocketAddress("eu1.testnet.galilel.cloud", 56123)
+                    new InetSocketAddress("eu1.testnet.galilel.org", 56123)
                 };
             }
 
@@ -709,7 +709,7 @@ public class MatiTest {
             @Override
             public InetSocketAddress[] getPeers(long services, long timeoutValue, TimeUnit timeoutUnit) throws PeerDiscoveryException {
                 return new InetSocketAddress[] {
-                    new InetSocketAddress("eu1.testnet.galilel.cloud", 56123)
+                    new InetSocketAddress("eu1.testnet.galilel.org", 56123)
                 };
             }
 
@@ -831,7 +831,7 @@ public class MatiTest {
             @Override
             public InetSocketAddress[] getPeers(long services, long timeoutValue, TimeUnit timeoutUnit) throws PeerDiscoveryException {
                 return new InetSocketAddress[] {
-                    new InetSocketAddress("eu1.testnet.galilel.cloud", 56123)
+                    new InetSocketAddress("eu1.testnet.galilel.org", 56123)
                 };
             }
 
