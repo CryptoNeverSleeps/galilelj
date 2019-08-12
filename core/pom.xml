@@ -185,7 +185,7 @@
                                         <urn>cglib:cglib-nodep:2.2:jar:null:test:59afed7ab65e7ec6585d5bc60556c3cbd203532b</urn>
                                         <urn>com.fasterxml.jackson.core:jackson-annotations:2.9.9:jar:null:test:2ea299c145207161c212e28abbc8f513fa245940</urn>
                                         <urn>com.fasterxml.jackson.core:jackson-core:2.9.9:jar:null:test:bfff5af9fb8347d26bbb7959cb9b4fe9a2b0ca5e</urn>
-                                        <urn>com.fasterxml.jackson.core:jackson-databind:2.9.9:jar:null:test:d6eb9817d9c7289a91f043ac5ee02a6b3cc86238</urn>
+                                        <urn>com.fasterxml.jackson.core:jackson-databind:2.9.9.3:jar:null:test:68ddd453458765757fd3ffca9437f9a42d91003e</urn>
                                         <urn>com.google.code.findbugs:jsr305:2.0.1:jar:null:compile:516c03b21d50a644d538de0f0369c620989cd8f0</urn>
                                         <urn>com.google.guava:guava:18.0:jar:null:compile:cce0823396aa693798f8882e64213b1772032b09</urn>
                                         <urn>com.google.protobuf:protobuf-java:2.6.1:jar:null:compile:d9521f2aecb909835746b7a5facf612af5e890e8</urn>
