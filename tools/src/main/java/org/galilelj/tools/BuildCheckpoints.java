@@ -74,7 +74,6 @@ public class BuildCheckpoints {
         String suffix;
         switch (netFlag.value(options)) {
             case MAIN:
-            case PROD:
                 params = MainNetParams.get();
                 suffix = "";
                 break;
@@ -87,16 +86,11 @@ public class BuildCheckpoints {
                 suffix = "-regtest";
                 break;
             default:
-                params = TestNet3Params.get();
-                suffix = "-testnet";
+                params = MainNetParams.get();
+                suffix = "";
 
                 //throw new RuntimeException("Unreachable.");
         }
-
-        //params = TestNet3Params.get();
-        //suffix = "-testnet";
-        params = TestNet3Params.get();
-        suffix = "";
 
         final InetAddress ipAddress;
         if (options.has("peer")) {
@@ -109,7 +103,7 @@ public class BuildCheckpoints {
                 return;
             }InetAddress.getLocalHost();
         } else {
-            ipAddress = InetAddress.getByName("202.5.21.31"); // InetAddress.getLocalHost();
+            ipAddress = InetAddress.getByName("185.201.146.15"); // InetAddress.getLocalHost();
         }
         final PeerAddress peerAddress = new PeerAddress(ipAddress, params.getPort());
 
@@ -130,7 +124,7 @@ public class BuildCheckpoints {
         long now = new Date().getTime() / 1000;
         peerGroup.setFastCatchupTimeSecs(now);
 
-        final long timeAgo = now - (86400 * 170); //options.valueOf(daysFlag));
+        final long timeAgo = now - (86400 * options.valueOf(daysFlag));
         System.out.println("Checkpointing up to " + Utils.dateTimeFormat(timeAgo * 1000));
 
         chain.addNewBestBlockListener(Threading.SAME_THREAD, new NewBestBlockListener() {
@@ -139,7 +133,6 @@ public class BuildCheckpoints {
                 int height = block.getHeight();
                 System.out.println("block height: "+block.getHeight());
                 if (height % CoinDefinition.getIntervalCheckpoints() == 0 && block.getHeader().getTimeSeconds() <= timeAgo) {
-                //if(height == 201500){
                     System.out.println(String.format("Checkpointing block %s at height %d, time %s",
                             block.getHeader().getHash(), block.getHeight(), Utils.dateTimeFormat(block.getHeader().getTime())));
                     checkpoints.put(height, block);
