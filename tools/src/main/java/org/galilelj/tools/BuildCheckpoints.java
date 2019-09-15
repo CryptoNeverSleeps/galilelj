@@ -40,6 +40,7 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.InetAddress;
+import java.net.InetSocketAddress;
 import java.net.UnknownHostException;
 import java.nio.ByteBuffer;
 import java.security.DigestOutputStream;
@@ -101,9 +102,9 @@ public class BuildCheckpoints {
                 System.err.println("Could not understand peer domain name/IP address: " + peerFlag + ": " + e.getMessage());
                 System.exit(1);
                 return;
-            }InetAddress.getLocalHost();
+            }
         } else {
-            ipAddress = InetAddress.getByName("185.201.146.15"); // InetAddress.getLocalHost();
+            ipAddress = new InetSocketAddress("185.201.146.15", params.getPort()).getAddress();
         }
         final PeerAddress peerAddress = new PeerAddress(ipAddress, params.getPort());
 
@@ -131,7 +132,10 @@ public class BuildCheckpoints {
             @Override
             public void notifyNewBestBlock(StoredBlock block) throws VerificationException {
                 int height = block.getHeight();
-                System.out.println("block height: "+block.getHeight());
+                //System.out.println("block height: "+block.getHeight());
+                if (height % 10000 == 0){
+                    System.out.println("height: " + height);
+                }
                 if (height % CoinDefinition.getIntervalCheckpoints() == 0 && block.getHeader().getTimeSeconds() <= timeAgo) {
                     System.out.println(String.format("Checkpointing block %s at height %d, time %s",
                             block.getHeader().getHash(), block.getHeight(), Utils.dateTimeFormat(block.getHeader().getTime())));
@@ -170,7 +174,7 @@ public class BuildCheckpoints {
         dataOutputStream.writeInt(0); // Number of signatures to read. Do this later.
         digestOutputStream.on(true);
         dataOutputStream.writeInt(checkpoints.size());
-        ByteBuffer buffer = ByteBuffer.allocate(StoredBlock.COMPACT_SERIALIZED_SIZE);
+        ByteBuffer buffer = ByteBuffer.allocate(StoredBlock.COMPACT_SERIALIZED_SIZE_ZEROCOIN);
         for (StoredBlock block : checkpoints.values()) {
             block.serializeCompact(buffer);
             dataOutputStream.write(buffer.array());
@@ -189,7 +193,7 @@ public class BuildCheckpoints {
         writer.println("TXT CHECKPOINTS 1");
         writer.println("0"); // Number of signatures to read. Do this later.
         writer.println(checkpoints.size());
-        ByteBuffer buffer = ByteBuffer.allocate(StoredBlock.COMPACT_SERIALIZED_SIZE);
+        ByteBuffer buffer = ByteBuffer.allocate(StoredBlock.COMPACT_SERIALIZED_SIZE_ZEROCOIN);
         for (StoredBlock block : checkpoints.values()) {
             block.serializeCompact(buffer);
             writer.println(CheckpointManager.BASE64.encode(buffer.array()));

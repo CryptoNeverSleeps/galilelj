@@ -546,7 +546,6 @@ public class Transaction extends ChildMessage {
     @Override
     protected void parse() throws ProtocolException {
         cursor = offset;
-        System.out.println("Starting reading transaction cursor offset: "+cursor);
         version = readUint32();
         optimalEncodingMessageSize = 4;
 
